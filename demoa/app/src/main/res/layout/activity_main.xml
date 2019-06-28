@@ -10,37 +10,37 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BasetoJsonStr"
-        android:id="@+id/btn1"/>
+        android:text="用户注册"
+        android:id="@+id/btn_reg"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Obj  to  JsonStr"
-        android:id="@+id/btn2"/>
+        android:text="用户登录"
+        android:id="@+id/btn_log"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JsonStr to Obj"
-        android:id="@+id/btn3"/>
+        android:text="修改用户信息"
+        android:id="@+id/btn_info"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JsonStr to Animal"
-        android:id="@+id/btn4"/>
+        android:text="添加学生"
+        android:id="@+id/btn_add"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JsonStr to Animal use GsonFormat"
-        android:id="@+id/btn5"/>
+        android:text="查询学生"
+        android:id="@+id/btn_query"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="快速解析广州天气"
-        android:id="@+id/btn6"/>
+        android:text="删除学生"
+        android:id="@+id/btn_del"/>
 
 </LinearLayout>
