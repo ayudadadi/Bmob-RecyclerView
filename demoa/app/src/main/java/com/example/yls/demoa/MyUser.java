@@ -3,6 +3,7 @@ package com.example.yls.demoa;
 import cn.bmob.v3.BmobUser;
 
 
+
 public class MyUser extends BmobUser {
     private int age;
     private String sex;

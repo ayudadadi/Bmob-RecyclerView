@@ -1,6 +1,8 @@
 package com.example.yls.demoa;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobFile;
+
 
 
 public class Student extends BmobObject {
@@ -8,6 +10,15 @@ public class Student extends BmobObject {
     private int age;
     private String profession;
     private int score;
+    private BmobFile headimg;
+
+    public BmobFile getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(BmobFile headimg) {
+        this.headimg = headimg;
+    }
 
     public String getName() {
         return name;

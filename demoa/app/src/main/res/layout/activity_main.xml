@@ -42,5 +42,15 @@
         android:layout_height="wrap_content"
         android:text="删除学生"
         android:id="@+id/btn_del"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="学生列表"
+        android:id="@+id/btn_list"/>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/iv_head"/>
 
 </LinearLayout>

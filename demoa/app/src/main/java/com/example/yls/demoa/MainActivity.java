@@ -1,19 +1,27 @@
 package com.example.yls.demoa;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 public class MainActivity extends AppCompatActivity {
     private Button btn_info;
@@ -22,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_add;
     private Button btn_query;
     private Button btn_del;
+    private Button btn_list;
+    private ImageView iv_head;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +49,56 @@ public class MainActivity extends AppCompatActivity {
         btn_add = findViewById(R.id.btn_add);
         btn_query = findViewById(R.id.btn_query);
         btn_del = findViewById(R.id.btn_del);
+        iv_head = findViewById(R.id.iv_head);
+        btn_list = findViewById(R.id.btn_list);
+        btn_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, StuListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Student student = new Student();
-                student.setName("黎少杉");
-                student.setAge(20);
-                student.setProfession("软件");
-                student.setScore(100);
-                student.save(new SaveListener<String>() {
+                String filePath = "/mnt/shared/Image/dog4.jpg";
+                final BmobFile headimg = new BmobFile(new File(filePath));
+                headimg.upload(new UploadFileListener() {
                     @Override
-                    public void done(String s, BmobException e) {
+                    public void done(BmobException e) {
                         if(e == null){
-                            toast("保存成功 " + s);
+                            Log.e("Bmob","文件上传成功");
+                            Student student = new Student();
+                            student.setName("梁敏怡");
+                            student.setAge(20);
+                            student.setProfession("软件");
+                            student.setScore(100);
+                            student.setHeadimg(headimg);
+                            student.save(new SaveListener<String>() {
+                                @Override
+                                public void done(String s, BmobException e) {
+                                    if(e == null){
+                                        toast("保存成功 " + s);
+                                    }else{
+                                        toast("保存失败 " + e.getMessage());
+                                    }
+                                }
+                            });
                         }else{
-                            toast("保存失败 " + e.getMessage());
+                            Log.e("Bmob","文件上传失败");
                         }
                     }
                 });
-
             }
         });
-
         btn_query.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 BmobQuery<Student> studentBmobQuery = new BmobQuery<>();
-                studentBmobQuery.addWhereEqualTo("profession","软件");
-                studentBmobQuery.addWhereEqualTo("age",18);
+//                studentBmobQuery.addWhereEqualTo("profession","软件");
+//                studentBmobQuery.addWhereEqualTo("age",21);
+                studentBmobQuery.addWhereEqualTo("name","梁敏怡");
                 studentBmobQuery.findObjects(new FindListener<Student>() {
                     @Override
                     public void done(List<Student> list, BmobException e) {
@@ -74,6 +106,10 @@ public class MainActivity extends AppCompatActivity {
                             StringBuffer stringBuffer = new StringBuffer();
                             for(Student student: list){
                                 stringBuffer.append(student).append("\n");
+                                BmobFile headimg = student.getHeadimg();
+                                Log.e("Bmob", "fileUrl = " + headimg.getFileUrl());
+                                Log.e("Bmob", "url = " + headimg.getUrl());
+                                Glide.with(MainActivity.this).load(headimg.getUrl()).into(iv_head);
                             }
                             toast(stringBuffer.toString());
                         }
